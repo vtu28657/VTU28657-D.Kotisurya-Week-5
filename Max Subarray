@@ -1,0 +1,39 @@
+import java.util.*;
+
+public class Solution {
+
+    public static List<Integer> maxSubarray(List<Integer> arr) {
+
+        int current = arr.get(0);
+        int maxSub = arr.get(0);
+        int maxElement = arr.get(0);
+
+        int maxNonContiguous = 0;
+        boolean hasPositive = arr.get(0) > 0;
+
+        for (int i = 1; i < arr.size(); i++) {
+
+            int value = arr.get(i);
+
+            // Maximum contiguous subarray
+            current = Math.max(value, current + value);
+            maxSub = Math.max(maxSub, current);
+
+            // Maximum element
+            maxElement = Math.max(maxElement, value);
+
+            // Non-contiguous sum
+            if (value > 0) {
+                maxNonContiguous += value;
+                hasPositive = true;
+            }
+        }
+
+        // If all values are negative
+        if (!hasPositive) {
+            maxNonContiguous = maxElement;
+        }
+
+        return Arrays.asList(maxSub, maxNonContiguous);
+    }
+}
